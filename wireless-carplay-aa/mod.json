@@ -79,6 +79,8 @@
       ],
       "region": "USA",
       "firmware": "260507"
+    },
+    {
       "model": "CEEV",
       "region": "CAN",
       "firmware": "260903",
