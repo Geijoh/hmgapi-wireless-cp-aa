@@ -253,10 +253,23 @@ def transaction_and_network(temp, sdk):
     fw.restored()
 
 
+def ceev_can_firmwares(temp, sdk):
+    for product in (PRODUCT, "CEEV.CAN.0000.V016.010.260903"):
+        unit = Unit(temp / product, sdk, product)
+        before = snapshot(unit.root / "system")
+        unit.engine("apply")
+        require(unit.cfg.read_text() == PATCHED_CFG, "accepted and its feature lines patched: " + product)
+        unit.engine("restore")
+        require(snapshot(unit.root / "system") == before, "restore returns every original /system byte: " + product)
+
+
 def existing_car_defaults(temp, sdk):
     for product in ("CVEV.USA.0000.V015.012.260507", "NEEV.USA.0000.V015.012.260507",
-                    "NEEV23.USA.0000.V015.012.260507", "CVEV.CAN.0000.V015.011.260206",
-                    "NEEV.CAN.0000.V015.011.260206"):
+                    "NEEV23.USA.0000.V015.012.260507", "NEEV23SE.USA.0000.V015.012.260507",
+                    "NEEV.USA.0000.V015.012.260903", "NEEV23.USA.0000.V015.012.260903",
+                    "NEEV23SE.USA.0000.V015.012.260903", "CVEV.CAN.0000.V015.011.260206",
+                    "NEEV.CAN.0000.V015.011.260206", "CEEV.USA.0000.V015.012.260507",
+                    "NQ5HEV.USA.0000.V015.012.260507"):
         unit = Unit(temp / product, sdk, product)
         unit.engine("plan")
         unit.engine("publish-state")
@@ -264,9 +277,35 @@ def existing_car_defaults(temp, sdk):
                 "existing model stays accepted with no default firewall rule: " + product)
 
 
+def carplay_firewall(temp, sdk):
+    unit = Unit(temp / "carplay-firewall", sdk, "CEEV.USA.0000.V015.012.260507")
+    unit.settings(cp_firewall=True)
+    plan = unit.engine("plan")
+    require("allow_network" not in plan, "CarPlay opt-in plan needs no permission for other networks", plan)
+    unit.engine("publish-state")
+    rules = [line for line in unit.state("net.rules").splitlines() if line.startswith("ipt ")]
+    v4 = [r for r in rules if r.startswith("ipt 4 filter HMGAPI_IN -i wlan0 -s 192.168.0.0/24 ")]
+    v6 = [r for r in rules if r.startswith("ipt 6 filter HMGAPI_IN -i wlan0 -s fe80::/10 ")]
+    require(len(rules) == 69 and len(v4) == 32 and len(v6) == 37,
+            "CarPlay opt-in emits only hotspot ingress: 32 IPv4, 36 IPv6 and ICMPv6",
+            unit.state("net.rules"))
+    require(sum("--dport 7000 " in r for r in rules) == 4 and sum("--sport 7000 " in r for r in rules) == 4
+            and sum("icmpv6" in r for r in rules) == 1,
+            "CarPlay ports both ways over TCP and UDP, plus ICMPv6", unit.state("net.rules"))
+    fw = Firewall(unit)
+    fw.once()
+    require(fw.read()["4/filter/INPUT"][0] == "-j HMGAPI_IN" and len(fw.read()["4/filter/HMGAPI_IN"]) == 32
+            and len(fw.read()["6/filter/HMGAPI_IN"]) == 37,
+            "CarPlay rules precede the stock whitelist")
+    unit.settings(cp_firewall=False)
+    unit.engine("publish-state")
+    fw.once()
+    fw.restored()
+
+
 def rejected_units(temp, sdk):
     for product in ("CEEV.USA.0000.V015.011.260206", "CEEV.CAN.0000.V015.011.250818",
-                    "CEEV.CAN.0000.V015.012.260206"):
+                    "CEEV.CAN.0000.V015.012.260206", "CEEV.CAN.0000.V015.011.260903"):
         unit = Unit(temp / product, sdk, product)
         before = snapshot(unit.root / "system")
         output = unit.engine("apply", expected=3)
@@ -317,7 +356,9 @@ def main():
     with tempfile.TemporaryDirectory(prefix="ioniq6-wireless-test-") as temp:
         temp = Path(temp)
         transaction_and_network(temp, sdk)
+        ceev_can_firmwares(temp, sdk)
         existing_car_defaults(temp, sdk)
+        carplay_firewall(temp, sdk)
         rejected_units(temp, sdk)
         if args.stock:
             check_private_stock(temp, sdk, args.stock)

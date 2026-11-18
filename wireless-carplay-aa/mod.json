@@ -1,7 +1,7 @@
 {
   "id": "wireless-carplay-aa",
   "name": "Wireless CarPlay + Android Auto",
-  "version": "2.2.0-rc.4",
+  "version": "2.2.0-rc.5",
   "hmgapi": ">=1.1.0-rc.3",
   "authors": [
     "VysseCodes"
@@ -9,7 +9,8 @@
   "license": "AGPL-3.0",
   "nemesis_conflicts": [
     "wireless.projection",
-    "projection.tbt"
+    "projection.tbt",
+    "enhanced.projection"
   ],
   "description": "Wireless CarPlay and Android Auto on the head unit's hotspot, with turn-by-turn on the cluster and HUD.",
   "api": {
@@ -22,7 +23,10 @@
       "model": [
         "CVEV",
         "NEEV",
-        "NEEV23"
+        "NEEV23",
+        "NEEV23SE",
+        "CEEV",
+        "NQ5HEV"
       ],
       "region": "USA",
       "firmware": "260507",
@@ -33,7 +37,8 @@
     {
       "model": [
         "NEEV",
-        "NEEV23"
+        "NEEV23",
+        "NEEV23SE"
       ],
       "region": "USA",
       "firmware": "260903",
@@ -74,6 +79,20 @@
       ],
       "region": "USA",
       "firmware": "260507"
+      "model": "CEEV",
+      "region": "CAN",
+      "firmware": "260903",
+      "features": [
+        "hmgapi.wifi"
+      ]
+    },
+    {
+      "model": "CN7NPE",
+      "region": "USA",
+      "firmware": "260903",
+      "features": [
+        "hmgapi.wifi"
+      ]
     }
   ],
   "parts": [
@@ -193,6 +212,53 @@
         ],
         "action": "accept",
         "when": "settings.aa_firewall"
+      },
+      {
+        "chain": "input",
+        "in": "hotspot",
+        "ip": 4,
+        "proto": "tcp+udp",
+        "ports": [
+          "5000-5001",
+          5020,
+          5353,
+          "6000-6003",
+          6011,
+          6020,
+          6030,
+          7000
+        ],
+        "both_ways": true,
+        "action": "accept",
+        "when": "settings.cp_firewall"
+      },
+      {
+        "chain": "input",
+        "in": "hotspot",
+        "ip": 6,
+        "proto": "tcp+udp",
+        "ports": [
+          "5000-5001",
+          5020,
+          5353,
+          "6000-6003",
+          6011,
+          6020,
+          6030,
+          6031,
+          7000
+        ],
+        "both_ways": true,
+        "action": "accept",
+        "when": "settings.cp_firewall"
+      },
+      {
+        "chain": "input",
+        "in": "hotspot",
+        "ip": 6,
+        "proto": "icmpv6",
+        "action": "accept",
+        "when": "settings.cp_firewall"
       }
     ]
   }

@@ -14,7 +14,7 @@ released from this repository.
 ## What it does
 
 Each part is a setting in the HMG-API app (pick the mod in its list for its settings).
-The firewall workaround is off by default; the other settings below are on:
+The firewall workarounds are off by default; the other settings below are on:
 
 | Setting | What |
 |---|---|
@@ -22,9 +22,11 @@ The firewall workaround is off by default; the other settings below are on:
 | Wireless CarPlay | The Bluetooth bridge and Wi-Fi sessions CarPlay needs |
 | Shared CarPlay identity | A typed API other mods use to contribute vehicle identity without competing native patches |
 | CarPlay music and Siri over Wi-Fi | AAC and Opus audio (`libleafiaaac.so`, using the head unit's own codecs) |
+| Song, artist and album art on wireless CarPlay | A hook in DiPO: asks the phone for Now Playing again once wireless CarPlay's session is up, for the cluster and the split screen |
 | Settings > Phone Projection opens Device Connections | A hook in the Settings app (US/Canada) |
 | USB drives and hubs don't start wired Android Auto | A hook in the Android Auto app: a USB stick no longer blocks wireless Android Auto |
 | Allow wireless Android Auto through the hotspot firewall | **Off by default.** Experimental Ioniq 6 workaround: new IPv4 TCP connections on hotspot port 40515 |
+| Allow wireless CarPlay through the hotspot firewall | **Off by default.** Needed on the US Ioniq 6 260507 and the Elantra N (`CN7NPE`) 260903: CarPlay's ports (TCP and UDP, both ways), mDNS and ICMPv6 from the hotspot |
 
 HMG-API backs up modified files and restores their original bytes when the mod is
 removed. Native recipes verify the bytes at each patch site. The Ioniq 6 feature
@@ -36,18 +38,36 @@ in-memory patches; disk changes appear in the app's plan.
 | Car | Region | Head unit software |
 |---|---|---|
 | Kia EV6 (`CVEV`) | USA | 260507 |
-| Hyundai Ioniq 5 (`NEEV`, `NEEV23`) | USA | 260507 |
-| Hyundai Ioniq 5 (`NEEV`, `NEEV23`) | USA | 260903 |
+| Hyundai Ioniq 5 (`NEEV`, `NEEV23`, `NEEV23SE`) | USA | 260507 |
+| Hyundai Ioniq 5 (`NEEV`, `NEEV23`, `NEEV23SE`) | USA | 260903 |
 | Kia EV6 (`CVEV`) | Canada | 260206 |
 | Hyundai Ioniq 5 (`NEEV`) | Canada | 260206 |
-| Hyundai Ioniq 6 (`CEEV`) — owner confirmed wireless AA and dash TBT | Canada | CEEV.CAN.0000.V015.011.260206 |
-| Hyundai Ioniq 6 (`CEEV`), owner confirmed wireless CarPlay with the CarPlay firewall setting on | USA | CEEV.USA.0000.V016.010.260903 |
+| Hyundai Ioniq 6 (`CEEV`) | USA | 260507 |
+| Hyundai Ioniq 6 (`CEEV`) — owner confirmed wireless AA and dash TBT | Canada | 260206 |
+| Hyundai Ioniq 6 (`CEEV`) — owner confirmed wireless CarPlay with the CarPlay firewall setting on | USA | 260903 |
+| Hyundai Ioniq 6 (`CEEV`) — owner confirmed wireless CarPlay and turn-by-turn (test build) | Canada | 260903 |
+| Kia Sportage Hybrid (`NQ5HEV`) — not yet tested on the car | USA | 260507 |
+| Hyundai Elantra N (`CN7NPE`) — owner confirmed wireless CarPlay and drive checks | USA | 260903 |
 
-The Ioniq 6 addition requires the matching HMG-API hook map. On November 9, 2026,
-the owner confirmed wireless Android Auto and Google Maps directions on the dash
-with private build `2.2.0-beta.101`. This is one owner report on the exact firmware;
-CarPlay, HUD/AR behavior and every maneuver/lifecycle case are not separately
-validated.
+The CN7NPE owner confirmed wireless CarPlay connection/UI on November 16, 2026,
+and audio, Siri, calls, reconnect, navigation/cluster directions and stability
+checks during a drive on November 17, on a test build of this mod. This needs an
+enabled HMG-API hook map and the CarPlay firewall option enabled and saved.
+Android Auto and on-car rollback are not confirmed.
+See [CN7NPE setup](docs/cn7npe-usa-260903.md).
+
+The Canadian Ioniq 6 needs HMG-API's hook map for its build. On November 9, 2026, an
+owner confirmed wireless Android Auto and Google Maps directions on the dash there,
+on a test build of this mod. That's one owner report on that firmware: CarPlay, the
+HUD and every maneuver aren't separately confirmed
+([Ioniq 6 Canada notes](docs/ioniq6-can-260206.md)).
+
+The US Ioniq 6 on 260507 (`CEEV.USA.0000.V015.012.260507`) was tested on a 2023 car
+with a fork of 2.1.0: wireless CarPlay, music, calls and Now Playing on the cluster.
+Its stock firewall allows the CarPlay ports only on the wired link, so turn on **Allow
+wireless CarPlay through the hotspot firewall** there.
+It needs HMG-API's hook map for that build (HMG-API #264), which comes with the
+HMG-API release after 1.1.0-rc.3.
 
 The list is `system` in [`wireless-carplay-aa/mod.json`](wireless-carplay-aa/mod.json).
 It needs the head unit's Wi-Fi hardware and a hook map for the car in HMG-API
@@ -57,30 +77,20 @@ Other regions wait for now. Your car isn't listed? Open an "Add my car" issue.
 
 ## Installing
 
-Install HMG-API **1.1.0-beta.1 or newer** first ([Installing HMG-API](https://github.com/Open-HMG/HMG-API/wiki/Installing-HMG-API)).
+Install HMG-API first ([Installing HMG-API](https://github.com/Open-HMG/HMG-API/wiki/Installing-HMG-API)).
+Then, from this repository's [releases](https://github.com/Open-HMG/hmgapi-wireless-cp-aa/releases):
 
-- **HMG-API USB installation:** leave the ZIP unopened in `HMGAPI/updates/`, then
-  use HMG-API → Check USB updates. Confirm version `2.2.0-beta.101`, enable the
-  hotspot firewall option and TBT, Apply successfully and restart while parked.
-  Leave the alternative AR HUD format off unless separately testing it. Remove
-  the USB before connecting AA.
-- **Signing transition:** the original CI test and upstream package use different
-  signing keys. Moving from either to this private release requires normal removal
-  of only the wireless module, Apply/restart, then installation. Keep HMG-API and
-  the checked map installed. The retained private signer is
-  `c2318db4-4435-830e-9ef0-297ce6a863fc`; later private updates must use that key.
-- **NEMESIS alternative:** the release includes the matching `-nemesis.zip` USB
-  layout and `-nemesis-package.zip`. Their numeric version is `2.1.98.101` and their
-  compatibility list includes CEEV CAN 260206. Do not substitute an old upstream ZIP.
+- **USB stick**: put `wireless-carplay-aa-<version>.zip` in `HMGAPI/updates/` on the
+  stick, then HMG-API app → Check USB updates → the mod → Apply changes.
+- **NEMESIS**: unzip `wireless-carplay-aa-<version>-nemesis.zip` onto the top level of a
+  USB stick and confirm the install in NEMESIS Manager.
+- **adb**: `adb push` the zip, then `hmgapid engine install <zip>`, `plan`, `apply`.
 
-[Setup and rollback](docs/ioniq6-can-260206.md) covers limits
-and the core beta's existing Apply-error behavior.
-
-Routine CI artifacts retain the upstream source version and use disposable keys;
-use the release asset for the car. [Private packaging and publication](docs/private-test-packages.md)
-documents the retained-key process. Original [upstream releases](https://github.com/Open-HMG/hmgapi-wireless-cp-aa/releases)
-use author key `7251ce71-a146-8a1e-958b-dbffc6af7359` and are separate from this
-private Ioniq 6 package.
+[Installing and removing mods](https://github.com/Open-HMG/HMG-API/wiki/Installing-and-removing-mods)
+has the steps. Updates must be signed with the same author key as the installed version.
+Every release here is signed with author key `7251ce71-a146-8a1e-958b-dbffc6af7359` (VysseCodes).
+A test build signed with another key installs only after the mod is removed, and the
+releases here can't update it.
 
 ## Hook points live in HMG-API
 
@@ -136,6 +146,9 @@ HMGAPI_SDK=$HMGAPI_SDK sh wireless-carplay-aa/tools/aaturns/test.sh
 HMGAPI_SDK=$HMGAPI_SDK sh wireless-carplay-aa/tools/cpturns/test.sh
 ```
 ```
+sh wireless-carplay-aa/tools/reattach/test.sh
+```
+```
 HMGAPI_SDK=$HMGAPI_SDK sh wireless-carplay-aa/tools/recipes/test.sh
 
 CLANG=clang LLD=ld.lld QEMU=qemu-system-arm OBJCOPY=llvm-objcopy \
@@ -152,10 +165,8 @@ without them those parts say "skipped" and pass. `native/leafiaaac/build.sh` reb
 generic `files/libcarplayidentity.so`; its equivalence test executes the ARM serializer
 and compares its output with the former EV Routing implementation.
 
-Upstream releases use `v<mod.json version>` and the inherited upstream signing
-workflow (see [CONTRIBUTING.md](CONTRIBUTING.md)). Private Ioniq 6 releases use the
-separate [publication procedure](docs/private-test-packages.md) and preserve the
-tested retained-key artifact; do not trigger the upstream workflow with a private tag.
+Releases use `v<mod.json version>` tags and the signing workflow (see
+[CONTRIBUTING.md](CONTRIBUTING.md)).
 
 ## License
 

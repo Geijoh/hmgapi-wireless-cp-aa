@@ -5,9 +5,14 @@
     "NEEV.USA.": "neev",
     "NEEV.CAN.": "neev_ca",
     "NEEV23.USA.": "neev",
+    "NEEV23SE.USA.": "neev",
+    "CEEV.USA.0000.V015.012.260507": "ceev",
     "CEEV.CAN.0000.V015.011.260206": "ceev_ca",
     "CEEV.USA.0000.V016.010.260903": "ceev_us",
     "SG2EV.USA.": "ev6"
+    "CEEV.CAN.0000.V016.010.260903": "ceev_ca_260903",
+    "NQ5HEV.USA.": "nq5",
+    "CN7NPE.USA.0000.V016.010.260903": "cn7npe_us"
   },
   "stock": "patches/{set}/stock",
   "expect": "patches/{set}/expect",
