@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""CN7NPE checks with the pinned SDK engine and synthetic stock; no car access."""
+"""Car-add checks with the pinned SDK engine and synthetic stock; no car access.
+
+CN7NPE by default; tools/tm23/test.sh sets CAR_PRODUCT and CAR_ONEBIN to run the same checks for another car.
+"""
 import fnmatch
 import json
 import os
@@ -18,8 +21,9 @@ sys.path.insert(0, str(MOD / "tools/ioniq6"))
 from integration import Firewall
 
 SDK = Path(os.environ["HMGAPI_SDK"]).resolve()
-PRODUCT = "CN7NPE.USA.0000.V016.010.260903"
-ONEBIN = "cn7npe_us"
+PRODUCT = os.environ.get("CAR_PRODUCT", "CN7NPE.USA.0000.V016.010.260903")
+ONEBIN = os.environ.get("CAR_ONEBIN", "cn7npe_us")
+MODEL = PRODUCT.split(".")[0]
 FEATURES = (
     "com.hkmc.software.wifihotspot",
     "com.hkmc.software.connectivity.androidauto_wireless",
@@ -133,19 +137,19 @@ with tempfile.TemporaryDirectory(prefix="cn7npe-wireless-test-") as temporary:
     (data / "mods/wireless-carplay-aa/.disabled").unlink()
     write(data / "settings/wireless-carplay-aa.json", '{"cp_firewall": false}\n')
     engine(root, "apply")
-    print("ok    CN7NPE: opt-in CarPlay rules are local, restored after resets and removed on toggle/disable")
+    print(f"ok    {MODEL}: opt-in CarPlay rules are local, restored after resets and removed on toggle/disable")
 
     engine(root, "restore")
     assert snapshot(root / "system") == before
     assert not (root / "settings.txt").read_text().strip()
-    print("ok    CN7NPE: plan, apply, repeat apply and byte-identical restore")
+    print(f"ok    {MODEL}: plan, apply, repeat apply and byte-identical restore")
 
     for product in (PRODUCT.replace("USA", "CAN"), PRODUCT.replace("260903", "260507"),
-                    PRODUCT.replace("V016.010", "V016.011"), PRODUCT.replace("CN7NPE", "CN7")):
+                    PRODUCT.replace("V016.010", "V016.011"), PRODUCT.replace(MODEL, MODEL[:-1])):
         output = engine(root, "apply", product=product, expected=3)
         assert "nothing changed" in output
         assert snapshot(root / "system") == before
-    print("ok    CN7NPE: other regions, firmware, builds and models refused before writes")
+    print(f"ok    {MODEL}: other regions, firmware, builds and models refused before writes")
 
     (root / "sys/bus/sdio/devices/mmc1:0001:1").rmdir()
     marker = data / "public/wifi-chip"
@@ -160,7 +164,7 @@ with tempfile.TemporaryDirectory(prefix="cn7npe-wireless-test-") as temporary:
     output = engine(root, "apply", expected=3)
     assert "already on the head unit" in output
     assert snapshot(root / "system") == occupied
-    print("ok    CN7NPE: missing Wi-Fi and foreign converter refused without writes")
+    print(f"ok    {MODEL}: missing Wi-Fi and foreign converter refused without writes")
 
     package = work / "fixture.zip"
     with zipfile.ZipFile(package, "w") as archive:
@@ -173,9 +177,9 @@ with tempfile.TemporaryDirectory(prefix="cn7npe-wireless-test-") as temporary:
         fields = dict(line.split("=", 1) for line in archive.read("NEMESIS.data").decode().splitlines()
                       if "=" in line)
         patterns = fields["os"].strip('"').split(",")
-        assert "CN7NPE.USA.*.260903" in patterns
+        assert MODEL + ".USA.*.260903" in patterns
         assert any(fnmatch.fnmatchcase(PRODUCT, pattern) for pattern in patterns)
         assert not any(fnmatch.fnmatchcase(PRODUCT.replace("USA", "CAN"), p) for p in patterns)
         assert not any(fnmatch.fnmatchcase(PRODUCT.replace("260903", "260507"), p) for p in patterns)
         assert archive.read("mod/package.zip") == package.read_bytes()
-    print("ok    CN7NPE: SDK-generated NEMESIS compatibility and embedded package")
+    print(f"ok    {MODEL}: SDK-generated NEMESIS compatibility and embedded package")

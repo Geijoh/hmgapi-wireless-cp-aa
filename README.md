@@ -48,6 +48,7 @@ in-memory patches; disk changes appear in the app's plan.
 | Hyundai Ioniq 6 (`CEEV`) — owner confirmed wireless CarPlay and turn-by-turn (test build) | Canada | 260903 |
 | Kia Sportage Hybrid (`NQ5HEV`) — not yet tested on the car | USA | 260507 |
 | Hyundai Elantra N (`CN7NPE`) — owner confirmed wireless CarPlay and drive checks | USA | 260903 |
+| Hyundai Santa Fe (`TM23`) — installs; CarPlay session not working yet (no Wi-Fi chip) | USA | 260903 |
 
 The CN7NPE owner confirmed wireless CarPlay connection/UI on November 16, 2026,
 and audio, Siri, calls, reconnect, navigation/cluster directions and stability
@@ -55,6 +56,12 @@ checks during a drive on November 17, on a test build of this mod. This needs an
 enabled HMG-API hook map and the CarPlay firewall option enabled and saved.
 Android Auto and on-car rollback are not confirmed.
 See [CN7NPE setup](docs/cn7npe-usa-260903.md).
+
+The Santa Fe (`TM23`) entry comes from one owner's Car Report (app fingerprints, hook map
+351 of 351 points found, no Wi-Fi chip fitted, so it needs a USB adapter). On the car the
+mod installs and the Bluetooth pairing works, but the CarPlay session does not finish yet.
+It needs an enabled HMG-API hook map.
+See [TM23 setup](docs/tm23-usa-260903.md).
 
 The Canadian Ioniq 6 needs HMG-API's hook map for its build. On November 9, 2026, an
 owner confirmed wireless Android Auto and Google Maps directions on the dash there,

@@ -88,6 +88,14 @@
       "features": [
         "hmgapi.wifi"
       ]
+    },
+    {
+      "model": "TM23",
+      "region": "USA",
+      "firmware": "260903",
+      "features": [
+        "hmgapi.wifi"
+      ]
     }
   ],
   "parts": [
