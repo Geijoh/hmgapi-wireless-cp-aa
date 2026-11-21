@@ -51,9 +51,9 @@
       "key": "menu",
       "type": "toggle",
       "default": true,
-      "title": "Settings > Phone Projection opens Device Connections",
+      "title": "Phone Projection settings open Device Connections",
       "apply": "restart",
-      "description": "A hook in the Settings app (no files changed). US/Canada only; other regions keep the stock choice."
+      "description": "Settings > Phone Projection, and the Settings button of the car's \"connect a phone\" popup, open Device Connections as on a stock car. With the wireless features on, the first would open the wireless page and the second an app these builds don't have (it crashed). Hooks only (no files changed). Settings > Phone Projection: US/Canada only; other regions keep the stock choice."
     },
     {
       "key": "usb_drives",
@@ -78,6 +78,14 @@
       "title": "Allow wireless CarPlay through the hotspot firewall",
       "apply": "rebuild",
       "description": "Needed on the Ioniq 6 USA 260507 and the Elantra N (CN7NPE) USA 260903, whose stock firewalls allow the CarPlay ports only on the wired link. Accepts CarPlay's ports from the hotspot's own addresses, TCP and UDP, as destination or source: 5000-5001, 5020, 5353, 6000-6003, 6011, 6020, 6030 and 7000 on IPv4 and IPv6, 6031 on IPv6, and ICMPv6 (neighbor discovery). HMG-API manages the rules and removes them when this setting or the mod is disabled. Leave off on cars that connect without it."
+    },
+    {
+      "key": "carplay_log",
+      "type": "toggle",
+      "default": false,
+      "title": "CarPlay's own log (troubleshooting)",
+      "apply": "restart",
+      "description": "For finding out why wireless CarPlay disconnects: the CarPlay system logs each session in detail (as TccCarPlay), so Record a problem or a log capture shows why it ended. Its lines name your phone (model and name). Leave it off unless someone helping you asks for it. Takes effect when the head unit restarts."
     }
   ]
 }

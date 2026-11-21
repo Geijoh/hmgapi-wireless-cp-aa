@@ -1,8 +1,8 @@
 {
   "id": "wireless-carplay-aa",
   "name": "Wireless CarPlay + Android Auto",
-  "version": "2.2.0-rc.5",
-  "hmgapi": ">=1.1.0-rc.3",
+  "version": "2.2.0-rc.8",
+  "hmgapi": ">=1.1.0-rc.6",
   "authors": [
     "VysseCodes"
   ],
@@ -47,6 +47,14 @@
       ]
     },
     {
+      "model": "NEEV",
+      "region": "CAN",
+      "firmware": "260903",
+      "features": [
+        "hmgapi.wifi"
+      ]
+    },
+    {
       "model": [
         "CVEV",
         "NEEV"
@@ -85,6 +93,286 @@
       "model": "CN7NPE",
       "region": "USA",
       "firmware": "260903",
+      "features": [
+        "hmgapi.wifi"
+      ]
+    },
+    {
+      "model": [
+        "AEPEEV",
+        "AEPEHEV",
+        "AEPEPHEV",
+        "CN7",
+        "CN723",
+        "CN7HEV",
+        "CN7HEV23",
+        "DN8",
+        "DN822",
+        "DN822HEV",
+        "DN823",
+        "DN823HEV",
+        "DN8HEV",
+        "JSN",
+        "LX2",
+        "OSEV",
+        "OSPE",
+        "OSPE23",
+        "QX21",
+        "TM23",
+        "TMFL",
+        "TMHEV",
+        "TMHEV23",
+        "TMPHEV",
+        "TMPHEV23"
+      ],
+      "region": "USA",
+      "firmware": "260507",
+      "features": [
+        "hmgapi.wifi"
+      ]
+    },
+    {
+      "model": [
+        "AEPEEV",
+        "AEPEHEV",
+        "AEPEPHEV",
+        "CN7",
+        "CN723",
+        "CN7HEV",
+        "CN7HEV23",
+        "DN8",
+        "DN822",
+        "DN822HEV",
+        "DN823",
+        "DN823HEV",
+        "DN8HEV",
+        "JSN",
+        "LX2",
+        "OSEV",
+        "OSPE",
+        "OSPE23",
+        "QX21",
+        "TM23",
+        "TMFL",
+        "TMHEV",
+        "TMHEV23",
+        "TMPHEV",
+        "TMPHEV23"
+      ],
+      "region": "CAN",
+      "firmware": "260206",
+      "features": [
+        "hmgapi.wifi"
+      ]
+    },
+    {
+      "model": [
+        "AEPEEV",
+        "AEPEHEV",
+        "AEPEPHEV",
+        "CN7",
+        "CN723",
+        "CN7HEV",
+        "CN7HEV23",
+        "DN8",
+        "DN822",
+        "DN822HEV",
+        "DN823",
+        "DN823HEV",
+        "DN8HEV",
+        "JSN",
+        "LX2",
+        "OSEV",
+        "OSPE",
+        "OSPE23",
+        "QX21",
+        "TM23",
+        "TMFL",
+        "TMHEV",
+        "TMHEV23",
+        "TMPHEV",
+        "TMPHEV23"
+      ],
+      "region": "USA",
+      "firmware": "260903",
+      "features": [
+        "hmgapi.wifi"
+      ]
+    },
+    {
+      "model": [
+        "AEPEEV",
+        "AEPEHEV",
+        "AEPEPHEV",
+        "CN7",
+        "CN723",
+        "CN7HEV",
+        "CN7HEV23",
+        "DN8",
+        "DN822",
+        "DN822HEV",
+        "DN823",
+        "DN823HEV",
+        "DN8HEV",
+        "JSN",
+        "LX2",
+        "OSEV",
+        "OSPE",
+        "OSPE23",
+        "QX21",
+        "TM23",
+        "TMFL",
+        "TMHEV",
+        "TMHEV23",
+        "TMPHEV",
+        "TMPHEV23"
+      ],
+      "region": "CAN",
+      "firmware": "260903",
+      "features": [
+        "hmgapi.wifi"
+      ]
+    },
+    {
+      "model": [
+        "CKPE",
+        "CKPE23",
+        "DE20EV",
+        "DE22EV",
+        "DE22HEV",
+        "DE22PHEV",
+        "DEPEHEV",
+        "DEPEPHEV",
+        "DL3",
+        "DL322",
+        "MQ4",
+        "MQ422",
+        "MQ422HEV",
+        "MQ4HEV",
+        "MQ4PHEV",
+        "ON",
+        "ON22",
+        "SK3",
+        "SK322",
+        "SK3EV",
+        "SK3EV22",
+        "SP2",
+        "SP222",
+        "YGPE"
+      ],
+      "region": "USA",
+      "firmware": "260507",
+      "features": [
+        "hmgapi.wifi"
+      ]
+    },
+    {
+      "model": [
+        "CKPE",
+        "DE20EV",
+        "DE22EV",
+        "DE22HEV",
+        "DE22PHEV",
+        "DEPEHEV",
+        "DEPEPHEV",
+        "DL322",
+        "DL3",
+        "MQ422",
+        "MQ422HEV",
+        "MQ4",
+        "MQ4HEV",
+        "MQ4PHEV",
+        "ON22",
+        "ON",
+        "SK322",
+        "SK3",
+        "SK3EV22",
+        "SK3EV",
+        "SP222",
+        "SP2",
+        "YGPE"
+      ],
+      "region": "CAN",
+      "firmware": "260206",
+      "features": [
+        "hmgapi.wifi"
+      ]
+    },
+    {
+      "model": [
+        "CKPE",
+        "CKPE22",
+        "DE20EV",
+        "DE22EV",
+        "DE22HEV",
+        "DE22PHEV",
+        "DEEVPBV",
+        "DEPEHEV",
+        "DEPEPHEV",
+        "DL3",
+        "DL322",
+        "DL3HEV",
+        "DL3HEV22",
+        "HMPE2",
+        "JAPE",
+        "JAPE22",
+        "MQ4",
+        "MQ422",
+        "MQ422HEV",
+        "MQ4HEV",
+        "ON",
+        "SK3",
+        "SK321",
+        "SK3EV",
+        "SK3EV21",
+        "SK3EV22",
+        "SP2",
+        "SP221",
+        "SP222",
+        "TAM",
+        "TAM22",
+        "YGPE",
+        "YGPEHEV"
+      ],
+      "region": "KOR",
+      "firmware": "260902",
+      "features": [
+        "hmgapi.wifi"
+      ]
+    },
+    {
+      "model": "CEEV",
+      "region": "USA",
+      "firmware": "260206",
+      "features": [
+        "hmgapi.wifi"
+      ]
+    },
+    {
+      "model": "CN7PE",
+      "region": "USA",
+      "firmware": "260507",
+      "features": [
+        "hmgapi.wifi"
+      ]
+    },
+    {
+      "model": [
+        "BDPE",
+        "KA4",
+        "NQ5",
+        "NQ5HEV",
+        "NQ5PHEV",
+        "ONPE",
+        "SG2EV",
+        "SG2HEV",
+        "SG2PHEV",
+        "SK3EPE",
+        "SK3PE",
+        "SP2PE"
+      ],
+      "region": "CAN",
+      "firmware": "260206",
       "features": [
         "hmgapi.wifi"
       ]
@@ -176,7 +464,8 @@
       "dipo.iap2_listener.notify": "replace",
       "dipo.session_listener.session_details": "observe",
       "dipo.iap2.bt_address": "change",
-      "dipo.bt.set_carplay_bt_address": "replace"
+      "dipo.bt.set_carplay_bt_address": "replace",
+      "framework.activity.start_activity_for_result": "change"
     },
     "native": {
       "libautoreceiver_infobank.so": [

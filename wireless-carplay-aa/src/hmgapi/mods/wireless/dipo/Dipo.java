@@ -93,6 +93,8 @@ public final class Dipo {
         tbt = m.settingBoolean("tbt", true);
         bridge = m.settingBoolean("bridge", true);
         nowPlaying = bridge && m.settingBoolean("now_playing", true);
+        CarPlayLog.on = m.settingBoolean("carplay_log", false);
+        CarPlayLog.apply("start");
         // the CarPlay libraries, patched in memory once DiPO loads them (files stay stock)
         if (bridge) m.nativePatch(a, "libCarPlayCore.so");   // AirPlay sessions over Wi-Fi
         if (m.settingBoolean("audio", true)) {
@@ -253,6 +255,7 @@ public final class Dipo {
         mod.hook(cl, "dipo.carplay.session_created", new MethodHook() {
             @Override
             protected void beforeHookedMethod(Param p) {
+                CarPlayLog.apply("session");
                 Bridge.onCpSessionCreated(p.thisObject);
             }
         });

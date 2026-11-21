@@ -42,6 +42,8 @@ in-memory patches; disk changes appear in the app's plan.
 | Hyundai Ioniq 5 (`NEEV`, `NEEV23`, `NEEV23SE`) | USA | 260903 |
 | Kia EV6 (`CVEV`) | Canada | 260206 |
 | Hyundai Ioniq 5 (`NEEV`) | Canada | 260206 |
+| Hyundai Ioniq 5 (`NEEV`), same files as the US 260903 build | Canada | 260903 |
+| Hyundai Elantra, Sonata, Santa Fe, Kona, Kona Electric 2020-21, Ioniq, Venue 2020-22, Veloster N, Palisade 2020-22 (and their hybrids) — not yet tested on a car; turns on the stock wireless projection and the hotspot | USA and Canada | 260507 (USA), 260206 (Canada), 260903 |
 | Hyundai Ioniq 6 (`CEEV`) | USA | 260507 |
 | Hyundai Ioniq 6 (`CEEV`) — owner confirmed wireless AA and dash TBT | Canada | 260206 |
 | Hyundai Ioniq 6 (`CEEV`) — owner confirmed wireless CarPlay with the CarPlay firewall setting on | USA | 260903 |
@@ -49,6 +51,12 @@ in-memory patches; disk changes appear in the app's plan.
 | Kia Sportage Hybrid (`NQ5HEV`) — not yet tested on the car | USA | 260507 |
 | Hyundai Elantra N (`CN7NPE`) — owner confirmed wireless CarPlay and drive checks | USA | 260903 |
 | Hyundai Santa Fe (`TM23`) — installs; CarPlay session not working yet (no Wi-Fi chip) | USA | 260903 |
+| Kia K5, Sorento, Stinger, Soul, Seltos 2021, Niro 2020-22, Cadenza, Telluride 2020-21 (and their hybrids) — not yet confirmed on a car (a US K5 is testing); turns on the stock wireless projection and the hotspot | USA | 260507 |
+| Kia K5, Sorento, Stinger, Soul, Seltos 2021, Niro 2020-21, Telluride 2020-21 (and their hybrids) — not yet tested on a car | Canada | 260206 |
+| Kia K5, Sorento, Stinger, Seltos, Soul, Niro, Mohave, K7, Morning, Ray (and their hybrids) — not yet tested on a car; HMG-API turns on the hotspot feature these units lack | Korea | 260902 |
+| Hyundai Ioniq 6 (`CEEV`) — not yet tested on the car; same software as the Canadian 260206 build; turn on the hotspot firewall settings if the phone finds the car but doesn't connect | USA | 260206 |
+| Hyundai Elantra (`CN7PE`) — not yet tested on the car; turn on "Allow wireless CarPlay through the hotspot firewall" if CarPlay finds the car but doesn't connect | USA | 260507 |
+| Kia Niro (EV, Hybrid, Plug-in Hybrid), Sportage (and Hybrid, Plug-in Hybrid), Carnival, Telluride, Forte, Soul, Seltos 2024 — not yet tested on a car | Canada | 260206 |
 
 The CN7NPE owner confirmed wireless CarPlay connection/UI on November 16, 2026,
 and audio, Siri, calls, reconnect, navigation/cluster directions and stability
